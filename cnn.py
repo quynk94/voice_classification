@@ -42,7 +42,7 @@ def train(args):
 
     # Build the Neural Network
     model = Sequential()
-    model.add(Conv1D(64, 3, activation='relu', input_shape=(193, 1)))
+    model.add(Conv1D(64, 3, activation='relu', input_shape=(X_train.shape[1], 1)))
     model.add(Conv1D(64, 3, activation='relu'))
     model.add(MaxPooling1D(3))
     model.add(Conv1D(128, 3, activation='relu'))
@@ -102,14 +102,13 @@ def real_time_predict(args):
         model = keras.models.load_model(args.model)
         while True:
             try:
-                features = np.empty((0, 193))
+                features = np.empty((0, 245))
                 start = time.time()
                 mfccs, chroma, mel, contrast, tonnetz = extract_feature()
                 ext_features = np.hstack(
                     [mfccs, chroma, mel, contrast, tonnetz])
                 features = np.vstack([features, ext_features])
                 features = np.expand_dims(features, axis=2)
-                print(model.predict(features))
                 pred = model.predict_classes(features)
                 for p in pred:
                     print(p)

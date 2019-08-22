@@ -24,7 +24,7 @@ def train(args):
 
     # Build the Neural Network
     model = Sequential()
-    model.add(Dense(512, activation='relu', input_dim=193))
+    model.add(Dense(512, activation='relu', input_dim=X_train.shape[1]))
     model.add(Dropout(0.5))
     model.add(Dense(512, activation='relu'))
     model.add(Dropout(0.5))
@@ -44,7 +44,7 @@ def train(args):
     y_test = np_utils.to_categorical(y_test, class_count)
 
     # Train and test
-    model.fit(X_train, y_train, epochs=1000, batch_size=64)
+    model.fit(X_train, y_train, epochs=2000, batch_size=64)
     score, acc = model.evaluate(X_test, y_test, batch_size=32)
     model.save(args.model)
     print('Test score:', score)
