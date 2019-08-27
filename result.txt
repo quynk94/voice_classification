@@ -1,4 +1,4 @@
-Voice classification
+Wake word
 - SVM
               precision    recall  f1-score   support
 
@@ -18,6 +18,19 @@ weighted avg       0.96      0.96      0.96       208
  people_talk       0.91      0.93      0.92        46
       silent       0.96      0.96      0.96        27
    wake_work       0.94      0.96      0.95        68
+
+    accuracy                           0.95       208
+   macro avg       0.95      0.95      0.95       208
+weighted avg       0.95      0.95      0.95       208
+
+- Logistic Regression
+[INFO] best hyperparameters: {'C': 0.1}
+              precision    recall  f1-score   support
+
+  background       0.95      0.88      0.91        66
+ people_talk       0.95      0.98      0.96        42
+      silent       0.94      0.97      0.96        33
+   wake_work       0.94      0.99      0.96        67
 
     accuracy                           0.95       208
    macro avg       0.95      0.95      0.95       208
