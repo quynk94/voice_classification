@@ -1,0 +1,52 @@
+Voice classification
+- SVM
+              precision    recall  f1-score   support
+
+  background       0.95      0.92      0.94        66
+ people_talk       0.97      0.93      0.95        42
+      silent       1.00      1.00      1.00        33
+   wake_work       0.93      0.99      0.96        67
+
+    accuracy                           0.96       208
+   macro avg       0.96      0.96      0.96       208
+weighted avg       0.96      0.96      0.96       208
+
+- CNN
+              precision    recall  f1-score   support
+
+  background       0.98      0.96      0.97        67
+ people_talk       0.91      0.93      0.92        46
+      silent       0.96      0.96      0.96        27
+   wake_work       0.94      0.96      0.95        68
+
+    accuracy                           0.95       208
+   macro avg       0.95      0.95      0.95       208
+weighted avg       0.95      0.95      0.95       208
+
+Voice classification
+- SVM
+
+              precision    recall  f1-score   support
+
+       chinh       1.00      1.00      1.00        15
+       dzung       0.93      1.00      0.96        13
+        manh       1.00      1.00      1.00        13
+         nam       1.00      1.00      1.00        16
+         quy       1.00      0.91      0.95        11
+
+    accuracy                           0.99        68
+   macro avg       0.99      0.98      0.98        68
+weighted avg       0.99      0.99      0.99        68
+
+- CNN
+              precision    recall  f1-score   support
+
+       chinh       1.00      1.00      1.00        20
+       dzung       1.00      0.85      0.92        13
+        manh       1.00      0.91      0.95        11
+         nam       0.93      1.00      0.96        13
+         quy       0.85      1.00      0.92        11
+
+    accuracy                           0.96        68
+   macro avg       0.95      0.95      0.95        68
+weighted avg       0.96      0.96      0.96        68
