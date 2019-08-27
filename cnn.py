@@ -14,10 +14,12 @@ from keras.layers import Embedding
 from keras.layers import Conv1D, GlobalAveragePooling1D, MaxPooling1D
 from keras.utils import np_utils
 from keras.optimizers import SGD
+from keras.callbacks import ModelCheckpoint
 import os
 import os.path as op
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+
 
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
@@ -42,7 +44,8 @@ def train(args):
 
     # Build the Neural Network
     model = Sequential()
-    model.add(Conv1D(64, 3, activation='relu', input_shape=(X_train.shape[1], 1)))
+    model.add(Conv1D(64, 3, activation='relu',
+                     input_shape=(X_train.shape[1], 1)))
     model.add(Conv1D(64, 3, activation='relu'))
     model.add(MaxPooling1D(3))
     model.add(Conv1D(128, 3, activation='relu'))
@@ -50,8 +53,13 @@ def train(args):
     model.add(MaxPooling1D(3))
     model.add(Conv1D(256, 3, activation='relu'))
     model.add(Conv1D(256, 3, activation='relu'))
+    model.add(MaxPooling1D(3))
+    model.add(Conv1D(512, 3, activation='relu'))
+    model.add(Conv1D(512, 3, activation='relu'))
     model.add(GlobalAveragePooling1D())
     model.add(Dropout(0.5))
+    model.add(Dense(512))
+    model.add(Activation("relu"))
     model.add(Dense(class_count, activation='softmax'))
     model.compile(loss='categorical_crossentropy',
                   optimizer='rmsprop', metrics=['accuracy'])
@@ -67,13 +75,22 @@ def train(args):
     X_test = np.expand_dims(X_test, axis=2)
 
     start = time.time()
-    model.fit(X_train, y_train, batch_size=args.batch_size, epochs=args.epochs)
+    # construct the callback to save only the *best* model to disk
+    # based on the validation loss
+    checkpoint = ModelCheckpoint(args.model, monitor="val_loss",
+                                 save_best_only=True, verbose=1)
+    callbacks = [checkpoint]
+
+    # train the network
+    print("[INFO] training network...")
+    H = model.fit(X_train, y_train, validation_data=(X_test, y_test),
+                  batch_size=args.batch_size, epochs=args.epochs, callbacks=callbacks, verbose=2)
     score, acc = model.evaluate(X_test, y_test, batch_size=16)
 
     print('Test score:', score)
     print('Test accuracy:', acc)
     print('Training took: %d seconds' % int(time.time() - start))
-    model.save(args.model)
+    # model.save(args.model)
 
 
 def predict(args):
@@ -102,7 +119,7 @@ def real_time_predict(args):
         model = keras.models.load_model(args.model)
         while True:
             try:
-                features = np.empty((0, 245))
+                features = np.empty((0, 193))
                 start = time.time()
                 mfccs, chroma, mel, contrast, tonnetz = extract_feature()
                 ext_features = np.hstack(

@@ -26,10 +26,10 @@ print("acc=%0.3f" % acc)
 filename = 'models/svm.pkl'
 pickle.dump(clf, open(filename, 'wb'))
 
-predict_feat_path = 'extracted_data/predict_feat.npy'
-predict_filenames = 'extracted_data/predict_filenames.npy'
-filenames = np.load(predict_filenames)
-X_predict = np.load(predict_feat_path)
-pred = clf.predict(X_predict)
-for pair in list(zip(filenames, pred)):
-    print(pair)
+# predict_feat_path = 'extracted_data/predict_feat.npy'
+# predict_filenames = 'extracted_data/predict_filenames.npy'
+# filenames = np.load(predict_filenames)
+# X_predict = np.load(predict_feat_path)
+# pred = clf.predict(X_predict)
+# for pair in list(zip(filenames, pred)):
+#     print(pair)
