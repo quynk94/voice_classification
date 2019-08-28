@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 import pickle
+import config
 
 # Load data from numpy file
 X = np.load('extracted_data/feat.npy')
@@ -19,20 +20,20 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # Simple SVM
 print('fitting...')
-target_names = ['chinh', 'dzung', 'manh', 'nam', 'quy']
-clf = SVC(C=20.0, gamma=0.00001)
-clf.fit(X_train, y_train)
-# acc = clf.score(X_test, y_test)
+target_names = config.target_names()
+model = SVC(C=20.0, gamma=0.00001)
+model.fit(X_train, y_train)
+# acc = model.score(X_test, y_test)
 # print("acc=%0.3f" % acc)
-preds = clf.predict(X_test)
+preds = model.predict(X_test)
 print(classification_report(y_test, preds, target_names=target_names))
 filename = 'models/svm.pkl'
-pickle.dump(clf, open(filename, 'wb'))
+pickle.dump(model, open(filename, 'wb'))
 
-# predict_feat_path = 'extracted_data/predict_feat.npy'
-# predict_filenames = 'extracted_data/predict_filenames.npy'
-# filenames = np.load(predict_filenames)
-# X_predict = np.load(predict_feat_path)
-# pred = clf.predict(X_predict)
-# for pair in list(zip(filenames, pred)):
-#     print(pair)
+predict_feat_path = 'extracted_data/predict_feat.npy'
+predict_filenames = 'extracted_data/predict_filenames.npy'
+filenames = np.load(predict_filenames)
+X_predict = np.load(predict_feat_path)
+preds = model.predict(X_predict)
+for filename, pred in list(zip(filenames, preds)):
+    print((filename, target_names[pred]))

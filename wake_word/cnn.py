@@ -62,8 +62,9 @@ def train(args):
     model.add(Dense(512))
     model.add(Activation("relu"))
     model.add(Dense(class_count, activation='softmax'))
+    opt = SGD(lr=0.01, decay=0.01 / args.epochs)
     model.compile(loss='categorical_crossentropy',
-                  optimizer='rmsprop', metrics=['accuracy'])
+                  optimizer=opt, metrics=['accuracy'])
 
     # Convert label to onehot
     lb = LabelEncoder().fit(y_train)

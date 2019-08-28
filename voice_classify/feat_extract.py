@@ -10,7 +10,7 @@ import sounddevice as sd
 import queue
 import time
 from scipy.io.wavfile import write
-import augment
+import random
 
 N_MFCC = 40
 N_CHROMA = 12
@@ -34,12 +34,12 @@ def extract_feature(file_name=None):
         start = time.time()
         with sd.InputStream(samplerate=sample_rate, callback=callback):
             while True:
-                if len(data) < 150000:
+                if time.time() - start < 4:
                     data.extend(q.get())
                 else:
                     print('Stop recording')
                     break
-        # sd.play(data, sample_rate)
+        sd.play(data, sample_rate)
         print('Record time: ', time.time() - start)
         X = np.array(data)
 
