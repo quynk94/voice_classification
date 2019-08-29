@@ -3,7 +3,6 @@ keras==2.2.4
 librosa==0.7.0
 soundfile==0.10.2
 sounddevice==0.3.13
-queue
 scikit-learn==0.21.2
-tensorflow==1.14.0
+tensorflow-gpu==1.14.0
 scipy==1.2.1
