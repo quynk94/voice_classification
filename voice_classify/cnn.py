@@ -20,7 +20,7 @@ import os.path as op
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report
-import config
+from config import target_names
 
 
 from tensorflow.compat.v1 import ConfigProto
@@ -92,11 +92,11 @@ def train(args):
     print('Test score:', score)
     print('Test accuracy:', acc)
     print('Training took: %d seconds' % int(time.time() - start))
-    target_names = config.target_names()
+    class_names = target_names()
 
     preds = model.predict(X_test, batch_size=16)
     print(classification_report(y_test.argmax(axis=1),
-                                preds.argmax(axis=1), target_names=target_names))
+                                preds.argmax(axis=1), target_names=class_names))
 
     # model.save(args.model)
 
