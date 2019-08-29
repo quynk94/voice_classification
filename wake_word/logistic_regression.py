@@ -8,7 +8,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.linear_model import LogisticRegression
 import pickle
-
+import config
 
 # Load data from numpy file
 X = np.load('extracted_data/feat.npy')
@@ -21,7 +21,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # Logistic Regression
 print('fitting...')
-target_names = ['background', 'people_talk', 'silent', 'wake_work']
+target_names = config.target_names()
 params = {"C": [0.1, 1.0, 10.0, 100.0]}
 model = GridSearchCV(LogisticRegression(
     solver="lbfgs", multi_class="auto", max_iter=300), params, cv=3, n_jobs=-1)
