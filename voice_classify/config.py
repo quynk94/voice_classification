@@ -1,2 +1,2 @@
 def target_names():
-    return ['nam', 'quy', 'background']
+    return ['01-background', '02-quy', '03-nam']

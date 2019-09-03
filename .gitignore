@@ -5,3 +5,7 @@ __pycache__/
 *.png
 env/*
 .vscode/*
+test_sample.png
+train_images
+test_images
+tmpImages
