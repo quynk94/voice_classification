@@ -3,6 +3,7 @@ __pycache__/
 *.pkl
 *.npy
 *.png
+*.model
 env/*
 .vscode/*
 test_sample.png
