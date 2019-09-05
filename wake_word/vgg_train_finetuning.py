@@ -98,11 +98,11 @@ def train(model, baseModel, trainX, trainY, testX, testY, classNames):
     train_model(model, trainX, trainY, testX, testY)
     evaluation_model(model, testX, testY, classNames)
 
-    # Defreeze all baseModel layers
-    for layer in baseModel.layers:
-        layer.trainable = True
+    # Defreeze some last CONV layers
+    for layer in baseModel.layers[15:]:
+	    layer.trainable = True
     # Compile model
-    opt = SGD(lr=0.0001)
+    opt = SGD(lr=0.001)
     model.compile(loss="categorical_crossentropy", optimizer=opt,
                   metrics=["accuracy"])
 

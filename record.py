@@ -27,7 +27,7 @@ parser.add_argument('filename', nargs='?', metavar='FILENAME',
                     help='audio file to store recording to')
 parser.add_argument('-t', '--subtype', type=str,
                     help='sound file subtype (e.g. "PCM_24")')
-parser.add_argument('-s', '--split-after', type=int, default=3,
+parser.add_argument('-s', '--split-after', type=int, default=10,
                     help='split after this number of seconds')
 args = parser.parse_args()
 
@@ -60,7 +60,7 @@ try:
                        'day': now.day, 'hour': now.hour, 'minute': now.minute, 'second': now.second}
             if args.filename is None:
                 filename = tempfile.mktemp(prefix='rec_unlimited_%d_' % counter,
-                                           suffix='.ogg', dir='')
+                                           suffix='.wav', dir='')
             else:
                 filename = args.filename.format(**context)
             with sf.SoundFile(filename, mode='x', samplerate=args.samplerate,
